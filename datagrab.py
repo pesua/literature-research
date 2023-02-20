@@ -5,12 +5,12 @@ import time
 import csv
 import string
 
-wikipedia = MediaWiki()
+# wikipedia = MediaWiki()
 
 
-def backlinks(name):
-    p = wikipedia.page(name)
-    return p.backlinks
+# def backlinks(name):
+#     p = wikipedia.page(name)
+#     return p.backlinks
 
 
 session = requests.Session()
@@ -28,7 +28,8 @@ def grab_authors(page, c_code):
         return {author.a['title']: author.a['href'] for author in soup.select('.div-col li') if author.a}
     elif c_code == 'de':
         return {author['title']: author['href'] for author in soup.select('dd a')}
-
+    elif c_code == 'fr':
+        return {author['title']: author['href'] for author in soup.select('#bodyContent li a') if author.has_attr('title')}
 
 def parce_autors(c_code, list_pages):
     authors = {}
